@@ -1,16 +1,56 @@
 import sys
+import pandas as pd
+import numpy as np
+from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
-    pass
+    """
+    the function loads the messages file and the categories file and combines these two files together
+    input: file path for the messages, file path for the categories
+    output: a dataframe that combines the messages and the categories
+    """
+    messages = pd.read_csv(messages_filepath)
+    categories = pd.read_csv(categories_filepath)
+    df = messages.merge(categories,how = 'left', on = 'id')
+
 
 
 def clean_data(df):
-    pass
+    """
+    the function converts the category values to numbers 0 or 1 and removes duplicated data
+    input: dataframe (the output of the load_data function)
+    output: a cleaned dataframe with one column for each category and 0/1 indicates whehter the message belongs to the category
+    """
+    # create a dataframe of the 36 individual category columns
+    categories = df['categories'].str.split(';', expand=True)
+    # extract a list of new column names for categories
+    row = categories.loc[0,]
+    category_colnames = row.apply(lambda x: x[:-2])
+    # rename the columns of `categories`
+    categories.columns = category_colnames
+    for column in categories:
+    # set each value to be the last character of the string
+    categories[column] = categories[column].str[-1]
+    # convert column from string to numeric
+    categories[column] = pd.to_numeric(categories[column])
+    # Drop the column child_alone since there is one value for all the messages. 
+    categories = categories.drop('child_alone', axis = 1)
+    # Replace 2 as 1 in the related column
+    map_related = {0:0, 1:1, 2:1}
+    categories['related'] = categories['related'].map(map_related)
+    # drop the original categories column from `df`
+    df.drop('categories', axis = 1, inplace = True)
+    # concatenate the original dataframe with the new `categories` dataframe
+    df = pd.concat([df, categories], axis = 1)
+    # drop duplicates
+    df = df.drop_duplicates()
+
 
 
 def save_data(df, database_filename):
-    pass  
+    engine = create_engine('sqlite:///{}.db'.format(database_filename))
+    df.to_sql(database_filename, engine, index=False)
 
 
 def main():
