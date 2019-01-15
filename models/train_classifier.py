@@ -18,6 +18,7 @@ warnings.simplefilter('ignore')
 from sklearn.model_selection import GridSearchCV
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+import pickle
 
 
 def load_data(database_filepath):
@@ -32,6 +33,7 @@ def load_data(database_filepath):
     X = df['message']
     Y = df.iloc[:, 4:]
     category_names = Y.columns.tolist()
+    return X, Y, category_names
 
 
 def tokenize(text):
@@ -72,6 +74,7 @@ def build_model():
     }
 
     cv = GridSearchCV(pipeline, param_grid=parameters)
+    return cv
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
