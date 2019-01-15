@@ -13,6 +13,7 @@ def load_data(messages_filepath, categories_filepath):
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = messages.merge(categories,how = 'left', on = 'id')
+    return df
 
 
 
@@ -27,13 +28,15 @@ def clean_data(df):
     # extract a list of new column names for categories
     row = categories.loc[0,]
     category_colnames = row.apply(lambda x: x[:-2])
-    # rename the columns of `categories`
+    # rename the columns of categories
     categories.columns = category_colnames
+    
     for column in categories:
-    # set each value to be the last character of the string
-    categories[column] = categories[column].str[-1]
-    # convert column from string to numeric
-    categories[column] = pd.to_numeric(categories[column])
+        # set each value to be the last character of the string
+        categories[column] = categories[column].str[-1]
+        # convert column from string to numeric
+        categories[column] = pd.to_numeric(categories[column])
+    
     # Drop the column child_alone since there is one value for all the messages. 
     categories = categories.drop('child_alone', axis = 1)
     # Replace 2 as 1 in the related column
@@ -45,6 +48,7 @@ def clean_data(df):
     df = pd.concat([df, categories], axis = 1)
     # drop duplicates
     df = df.drop_duplicates()
+    return df
 
 
 
