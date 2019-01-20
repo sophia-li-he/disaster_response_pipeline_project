@@ -42,29 +42,73 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+    df_top5 = df.iloc[:, 4:].sum().sort_values(ascending=False).head().to_frame()
+    df_top5.columns = ['count']
+    df_bottom5 = df.iloc[:, 4:].sum().sort_values(ascending=True).head().to_frame()
+    df_bottom5.columns = ['count']
+    top5_list = df_top5.index.tolist()
+    top5_count = df_top5['count']
+    bottom5_list = df_bottom5.index.tolist()
+    bottom5_count = df_bottom5['count']
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
-        {
-            'data': [
-                Bar(
-                    x=genre_names,
-                    y=genre_counts
-                )
-            ],
+    	{
+	            'data': [
+	                Bar(
+	                    x=genre_names,
+	                    y=genre_counts
+	                )
+	            ],
 
-            'layout': {
-                'title': 'Distribution of Message Genres',
-                'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Genre"
-                }
-            }
-        }
-    ]
+	            'layout': {
+	                'title': 'Distribution of Message Genres',
+	                'yaxis': {
+	                    'title': "Count"
+	                },
+	                'xaxis': {
+	                    'title': "Genre"
+	                }
+	            }
+	        },
+	            {
+	            'data': [
+	                Bar(
+	                    x=top5_list,
+	                    y=top5_count
+	                )
+	            ],
+
+	            'layout': {
+	                'title': 'Counts of Most Frequent Message Categories',
+	                'yaxis': {
+	                    'title': "Count"
+	                },
+	                'xaxis': {
+	                    'title': "Message Category"
+	                }
+	            }
+	        },
+	       {
+	            'data': [
+	                Bar(
+	                    x=bottom5_list,
+	                    y=bottom5_count
+	                )
+	            ],
+
+	            'layout': {
+	                'title': 'Counts of Least Frequent Message Categories',
+	                'yaxis': {
+	                    'title': "Count"
+	                },
+	                'xaxis': {
+	                    'title': "Message Category"
+	                }
+	            }
+	        }
+	    ]
     
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
