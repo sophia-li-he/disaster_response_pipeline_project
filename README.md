@@ -60,7 +60,8 @@ The project is part of the [Udacity Data Scientist Nanodegree](https://www.udaci
 1. Go to http://0.0.0.0:3001/
 
 # Screenshots of the App
-
+![Screenshot1](https://photos.app.goo.gl/gQzpeRaQsiXWLp5ZA)
+![Screenshot2](https://photos.app.goo.gl/yWLin1qSGkNUPUb49)
 
 # Licensing, Authors, Acknowledgements
 1. Credits to https://github.com/paawan01/Titanic_dataset_analysis for the readme template
