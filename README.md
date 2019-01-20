@@ -46,6 +46,11 @@ The project is part of the [Udacity Data Scientist Nanodegree](https://www.udaci
     5. Outputs results on the test set
     6. Exports the final model as a pickle file
 
+
+**screenshot folder**
+1. `screenshot1`: screenshot of the classification result page of the web app
+2. `screenshot2`: screenshot of the exploratory analysis of the input data using `plotly`.
+
 # Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
@@ -60,8 +65,9 @@ The project is part of the [Udacity Data Scientist Nanodegree](https://www.udaci
 1. Go to http://0.0.0.0:3001/
 
 # Screenshots of the App
-![Screenshot1](https://photos.app.goo.gl/gQzpeRaQsiXWLp5ZA)
-![Screenshot2](https://photos.app.goo.gl/yWLin1qSGkNUPUb49)
+![screenshot1](screenshot/screenshot1.jpg)
+![screenshot2](screenshot/screenshot2.jpg)
+
 
 # Licensing, Authors, Acknowledgements
 1. Credits to https://github.com/paawan01/Titanic_dataset_analysis for the readme template
