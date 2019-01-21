@@ -53,6 +53,11 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """
+    the function saves dataframe to database
+    input: dataframe, string of the database filename
+    output: a database file with the input filename
+    """
     engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql('DisasterResponse', engine, index=False)
 
