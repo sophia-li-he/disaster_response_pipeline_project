@@ -29,7 +29,6 @@ def load_data(database_filepath):
     """
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     df = pd.read_sql_table('DisasterResponse', engine)
-    df = df.iloc[0:3000,]
     X = df['message']
     Y = df.iloc[:, 4:]
     category_names = Y.columns.tolist()
